@@ -1,15 +1,13 @@
 package tests;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import utils.Driver;
 import utils.Log;
 
 import static locators.MainPageLocators.*;
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AdressOperationTest {
 
@@ -25,10 +23,22 @@ public class AdressOperationTest {
         Log.info("Log in");
         driver.findElement(EMAIL_FIELD).sendKeys(EMAIL);
         driver.findElement(PASSWORD_FIELD).sendKeys(PASSWORD);
-        driver.findElement(LOGIN);
+        driver.findElement(LOGIN).click();
 
     }
+
     @Test
+    @Order(3)
+    public void deleteAdress(){
+        Log.info("open adresses");
+        driver.findElement(ADRESSES).click();
+
+        Log.info("delete last adress");
+        driver.findElement(TD_ELEMENT).click();
+        driver.switchTo().alert().accept();
+    }
+    @Test
+    @Order(1)
     public void addAdress(){
         driver.findElement(ADRESSES).click();
         driver.findElement(ADD_ADRESS).click();
@@ -40,14 +50,22 @@ public class AdressOperationTest {
         driver.findElement(COMMIT).click();
     }
     @Test
+    @Order(2)
     public void editAdress(){
         driver.findElement(EDIT_ADRESS).click();
         driver.findElement(SECOND_ADRESS).sendKeys("Belarus");
         driver.findElement(COMMIT).click();
     }
-    @Test
-    public void deleteAdress(){
-        driver.findElement(LIST).click();
-        driver.findElement(TD_ELEMENT).click();
+    @AfterEach
+    public void afterEachTestMethod(){
+        Log.info("Некоторый код выполяется после каждого метода");
+    }
+
+    @AfterAll
+    public void tearDown() {
+
+        Log.info("Закрываем браузер");
+        driver.quit();
+
     }
 }

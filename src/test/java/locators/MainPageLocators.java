@@ -32,7 +32,7 @@ public class MainPageLocators {
     //3 test
 
 
-    public static final By LIST = By.xpath("//a[@data-test='list']");
+    //public static final By LIST = By.xpath("//a[@data-test='list']");
     public static final By TD_ELEMENT = By.xpath("//tr[last()]/td[last()]/a");
     //4 test
 
